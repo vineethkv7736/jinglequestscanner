@@ -35,7 +35,6 @@ const PersonData = () => {
       .then(async (userCredential) => {
         localStorage.setItem('userName', name);
         localStorage.setItem('userEmail', email);
-        setIsFirstTimeUser(false)
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -43,16 +42,12 @@ const PersonData = () => {
         console.log(errorMessage);
         alert("Login Failed, Try Again !!");
       });
+      setIsFirstTimeUser(false)
   };
-  const handleLogout = async() => {
-    let auth = window.prompt('Type "PROTEK" to confirm logout');
-    auth=auth.toUpperCase();
-    if(auth=="PROTEK")
-    { const up= doc(db, "users",email);
-      await updateDoc(up,{
-      count:scanCount
-      }).then(()=>{
-        localStorage.removeItem('userName');
+  const handleLogout = () =>{
+    let auth = window.prompt('Type "CONFIRM" to confirm logout');
+    if(auth=="CONFIRM")
+    { localStorage.removeItem('userName');
       localStorage.removeItem('userEmail');
       localStorage.removeItem('scanCount');
       localStorage.removeItem('scannedCodes');
@@ -61,18 +56,13 @@ const PersonData = () => {
       setEmail('');
       updateScanCount(0);
       setIsFirstTimeUser(true);
-      }).catch((er)=>{
-        alert("Firebase error Try again")
-        console.error(er);
-    })
-      
     }
     else 
     {
       window.alert("Try again");
     }
   };
-
+  
   return (
     <div >
       {isFirstTimeUser ? (<div className='w-screen h-screen bg-gray-200 flex justify-center items-center '>
@@ -106,7 +96,7 @@ const PersonData = () => {
         </div>
         <hr className='pt-0.5 bg-red-900 mt-3 ml-3 mr-3' />
         <h1 className='flex justify-center font-serif text-2xl mt-4 mb-4'>Scan QR</h1>
-        <QRCodeScanner updateScanCount={updateScanCount} />
+        <QRCodeScanner updateScanCount={updateScanCount} email={email} />
       </div>
       )}
     </div>
