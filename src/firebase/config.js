@@ -1,19 +1,18 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCQAiKOHAYvnc2S4MFjZOuUMoz87utI0VQ",
-  authDomain: "prcqrscanner.firebaseapp.com",
-  projectId: "prcqrscanner",
-  storageBucket: "prcqrscanner.appspot.com",
-  messagingSenderId: "735419670435",
-  appId: "1:735419670435:web:f68e3f8b37d216f5ea8416"
+  apiKey: "AIzaSyB9Cy3su5Evl5FhQmsAoZsrZD7tfinC-wo",
+  authDomain: "jinglequest-cdc1c.firebaseapp.com",
+  projectId: "jinglequest-cdc1c",
+  storageBucket: "jinglequest-cdc1c.appspot.com",
+  messagingSenderId: "1089450906826",
+  appId: "1:1089450906826:web:c3e0be2fa238ca4f51d033"
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export {db}
+const auth = getAuth()
+export {db,auth}

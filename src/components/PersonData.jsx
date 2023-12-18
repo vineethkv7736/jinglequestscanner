@@ -1,15 +1,16 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import QRCodeScanner from './QRCodeScanner';
 import "./per.css";
-import {db} from "../firebase/config.js";
+import {db,auth} from "../firebase/config.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 const PersonData = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [pass, setpass] = useState('');
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(true);
   const [scanCount, setScanCount] = useState(0);
-
   const updateScanCount = (count) => {
     setScanCount(count);
   };
@@ -26,24 +27,23 @@ const PersonData = () => {
       setIsFirstTimeUser(false);
     }
   }, []); 
-
-  const handleFormSubmit = async(e) => {
-    e.preventDefault();
-    await setDoc(doc(db, "users",email), {
-      Name: name,
-      Email:email,
-      Phno: phone
-    }).then(()=>{
-      setIsFirstTimeUser(false)
-    }).catch((er)=>{
-      alert("Try again")
-      console.error(er);
-  })
-    localStorage.setItem('userName', name);
-    localStorage.setItem('userEmail', email);
-
+  
+  const  handleFormSubmit = () => {
+    console.log(pass);
+    console.log(email);
+    signInWithEmailAndPassword(auth, email, pass)
+      .then(async (userCredential) => {
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userEmail', email);
+        setIsFirstTimeUser(false)
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        alert("Login Failed, Try Again !!");
+      });
   };
-
   const handleLogout = async() => {
     let auth = window.prompt('Type "PROTEK" to confirm logout');
     auth=auth.toUpperCase();
@@ -79,7 +79,7 @@ const PersonData = () => {
         <form onSubmit={handleFormSubmit} className='p-4 bg-white flex flex-col items-center shadow-md rounded-md font-sans'>
           <h1 className='font-serif'>PROTEK - 2023</h1>
           <label className='label mt-2'>
-            Name:
+            Team Name:
             <input className='input' placeholder='Username' type="text" value={name} onChange={(e) => setName(e.target.value)} required/>
           </label>
           <label className='label'>
@@ -87,10 +87,10 @@ const PersonData = () => {
             <input className='input' placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
           </label>
           <label className='label'>
-            Phone:
-            <input className='input' placeholder='Mobile number' type="number" value={phone} onChange={(e) => setPhone(e.target.value)} required/>
+            Password:
+            <input className='input' placeholder='password' type="password" value={pass} onChange={(e) => setpass(e.target.value)} required/>
           </label>
-          <button className='p-2 bg-red-900 mt-3 font-semibold text-white rounded-lg mt-2' type="submit">Save User Info</button>
+          <button className='p-2 bg-red-900 mt-3 font-semibold text-white rounded-lg mt-2' type="submit">LOGIN</button>
         </form>
         </div>
       ) : (
