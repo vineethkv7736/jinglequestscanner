@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    color:black;
+    
+}
+.input{
+    @apply w-full p-1 border-b-2 border-red-800
+}
+.label{
+   @apply flex flex-col mt-2 w-full
+}
