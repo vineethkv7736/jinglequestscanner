@@ -18,6 +18,7 @@ const QRCodeScanner = ({ updateScanCount, email }) => {
       alert("Firebase error. Try again");
       console.error(error);
     });
+    alert("Game ended");
   };
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const QRCodeScanner = ({ updateScanCount, email }) => {
       fps: 500,
       qrbox: 150,
     });
+
 
     qrCodeScanner.render(success, error);
 

@@ -23,7 +23,6 @@ const PersonData = () => {
     if (storedName && storedEmail) {
       setName(storedName);
       setEmail(storedEmail);
-     // setScanCount(parseInt(storedScanCount, 10));
       setIsFirstTimeUser(false);
     }
   }, []); 
