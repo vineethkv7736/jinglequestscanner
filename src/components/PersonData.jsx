@@ -30,11 +30,10 @@ const PersonData = () => {
   const  handleFormSubmit = () => {
     console.log(pass);
     console.log(email);
-    signInWithEmailAndPassword(auth, email, pass)
+      signInWithEmailAndPassword(auth, email, pass)
       .then(async (userCredential) => {
         localStorage.setItem('userName', name);
         localStorage.setItem('userEmail', email);
-        setIsFirstTimeUser(false);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -42,6 +41,7 @@ const PersonData = () => {
         alert(errorMessage);
         alert("Login Failed, Try Again !!");
       });
+      setIsFirstTimeUser(false);
   };
   const handleLogout = () =>{
     let auth = window.prompt('Type "CONFIRM" to confirm logout');
