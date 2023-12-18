@@ -63,9 +63,10 @@ const PersonData = () => {
   };
   
   return (
-    <div >
-      {isFirstTimeUser ? (<div className='w-screen h-screen bg-gray-200 flex justify-center items-center '>
-        <form onSubmit={handleFormSubmit} className='p-4 bg-white flex flex-col items-center shadow-md rounded-md font-sans'>
+    <div>
+    {isFirstTimeUser ? (
+      <div className='w-screen h-screen bg-gray-200 flex justify-center items-center '>
+        <div className='p-4 bg-white flex flex-col items-center shadow-md rounded-md font-sans'>
           <h1 className='font-serif'>PROTEK - 2023</h1>
           <label className='label mt-2'>
             Team Name:
@@ -79,26 +80,26 @@ const PersonData = () => {
             Password:
             <input className='input' placeholder='password' type="password" value={pass} onChange={(e) => setpass(e.target.value)} required/>
           </label>
-          <button className='p-2 bg-red-900 mt-3 font-semibold text-white rounded-lg mt-2' type="submit">LOGIN</button>
-        </form>
+          <button className='p-2 bg-red-900 mt-3 font-semibold text-white rounded-lg mt-2' onClick={handleFormSubmit}>LOGIN</button>
         </div>
-      ) : (
-        <div className='w-screen h-screen bg-gray-200'>
-          <div className=' flex justify-start'>
-        <p className='font-serif text-2xl mb-1 mt-2 ml-5'>Welcome  {name}</p>
+      </div>
+    ) : (
+      <div className='w-screen h-screen bg-gray-200'>
+        <div className=' flex justify-start'>
+          <p className='font-serif text-2xl mb-1 mt-2 ml-5'>Welcome  {name}</p>
         </div>
         <div className=' flex justify-end'>
-        <button onClick={handleLogout} className='p-2 bg-red-900 text-white rounded-lg mt-1 mr-2'>Logout</button>
+          <button onClick={handleLogout} className='p-2 bg-red-900 text-white rounded-lg mt-1 mr-2'>Logout</button>
         </div>
         <div className=' flex justify-center'>
-        <p  className='font-serif text-1xl mb-0 blink'>Total No of Scan: {scanCount}</p>
+          <p className='font-serif text-1xl mb-0 blink'>Total No of Scan: {scanCount}</p>
         </div>
         <hr className='pt-0.5 bg-red-900 mt-3 ml-3 mr-3' />
         <h1 className='flex justify-center font-serif text-2xl mt-4 mb-4'>Scan QR</h1>
         <QRCodeScanner updateScanCount={updateScanCount} email={email} />
       </div>
-      )}
-    </div>
+    )}
+  </div>  
   );
 };
 
