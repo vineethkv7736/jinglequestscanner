@@ -34,6 +34,7 @@ const PersonData = () => {
       .then(async (userCredential) => {
         localStorage.setItem('userName', name);
         localStorage.setItem('userEmail', email);
+        setIsFirstTimeUser(false)
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -41,7 +42,6 @@ const PersonData = () => {
         console.log(errorMessage);
         alert("Login Failed, Try Again !!");
       });
-      setIsFirstTimeUser(false)
   };
   const handleLogout = () =>{
     let auth = window.prompt('Type "CONFIRM" to confirm logout');
