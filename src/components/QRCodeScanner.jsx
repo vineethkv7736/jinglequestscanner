@@ -23,7 +23,7 @@ const QRCodeScanner = ({ updateScanCount, email }) => {
 
   useEffect(() => {
     const storedScanCount = localStorage.getItem('scanCount');
-    if (test === 2) {
+    if (test === 9) {
       upcount(email);
     }
     if (storedScanCount) {
