@@ -34,12 +34,12 @@ const PersonData = () => {
       .then(async (userCredential) => {
         localStorage.setItem('userName', name);
         localStorage.setItem('userEmail', email);
-        setIsFirstTimeUser(false)
+        setIsFirstTimeUser(false);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage);
+        alert(errorMessage);
         alert("Login Failed, Try Again !!");
       });
   };
