@@ -1,5 +1,4 @@
-// QRCodeScanner.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { db } from "../firebase/config.js";
 import { doc, updateDoc } from "firebase/firestore";
@@ -7,6 +6,7 @@ import { doc, updateDoc } from "firebase/firestore";
 const QRCodeScanner = ({ updateScanCount, email }) => {
   const [scanCount, setScanCount] = useState(0);
   const [test, testCount] = useState(0);
+  const qrCodeScannerRef = useRef(null);
 
   const upcount = async (email) => {
     const up = doc(db, "users", email);
@@ -35,8 +35,16 @@ const QRCodeScanner = ({ updateScanCount, email }) => {
       qrbox: 150,
     });
 
+    qrCodeScannerRef.current = qrCodeScanner;
 
     qrCodeScanner.render(success, error);
+
+    return () => {
+      if (qrCodeScannerRef.current) {
+        qrCodeScannerRef.current.clear();
+        
+      }
+    };
 
     function success(result) {
       const l = result.length;
