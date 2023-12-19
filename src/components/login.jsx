@@ -1,43 +1,43 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react'
-import { auth } from '../firebase/config';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { auth } from "../firebase/config";
 import { useNavigate } from "react-router";
 
 const Login = () => {
-     const [name, setName] = useState("");
-     const [email, setEmail] = useState("");
-     const [pass, setpass] = useState("");
-     const navigate = useNavigate();
-    const handleFormSubmit = () => {
-      console.log(pass);
-      console.log(email);
-      if(name==="" || email==="" || pass===""){
-        alert("Some fields are missing");
-      }else{
-          signInWithEmailAndPassword(auth, email, pass)
-            .then(async () => {
-                const user = {
-                    userName: name,
-                    email: email
-                }
-                console.log(user);
-                
-              localStorage.setItem("user", JSON.stringify(user));
-              navigate("/scan");
-            //   setIsFirstTimeUser(false);
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              alert(errorMessage);
-              alert("Login Failed, Try Again !!");
-            });
-      }
-    };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setpass] = useState("");
+  const navigate = useNavigate();
+  const handleFormSubmit = () => {
+    console.log(pass);
+    console.log(email);
+    if (name === "" || email === "" || pass === "") {
+      alert("Some fields are missing");
+    } else {
+      signInWithEmailAndPassword(auth, email, pass)
+        .then(async () => {
+          const user = {
+            userName: name,
+            email: email,
+          };
+          console.log(user);
+
+          localStorage.setItem("user", JSON.stringify(user));
+          navigate("/scan");
+          //   setIsFirstTimeUser(false);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+          alert("Login Failed, Try Again !!");
+        });
+    }
+  };
   return (
     <div className="w-screen h-screen bg-gray-200 flex justify-center items-center ">
       <div className="p-4 bg-white flex flex-col items-center shadow-md rounded-md font-sans">
-        <h1 className="font-serif">Protek - 2023</h1>
+        <h1 className="font-serif">Jingle Quest</h1>
         <label className="label mt-2">
           Team Name:
           <input
@@ -80,6 +80,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;
