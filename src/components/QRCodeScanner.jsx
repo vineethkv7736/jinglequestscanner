@@ -3,7 +3,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { db } from "../firebase/config.js";
 import { doc, updateDoc } from "firebase/firestore";
 
-const QRCodeScanner = (email, updateScanCount) => {
+const QRCodeScanner = (em) => {
   const [scanCount, setScanCount] = useState(0);
   const [test, testCount] = useState(0);
 
@@ -78,7 +78,7 @@ const QRCodeScanner = (email, updateScanCount) => {
           );
           qrCodeScanner.clear();
           if (scanCount === 3) {
-            upcount(email);
+            upcount(em.email);
           }
           setScanCount((prev) => prev + 1);
         }
@@ -96,7 +96,7 @@ const QRCodeScanner = (email, updateScanCount) => {
   useEffect(() => {
     // if (test > 0) {
     localStorage.setItem("scanCount", scanCount);
-    updateScanCount(scanCount);
+    em.updateScanCount(scanCount);
     console.log("Scancount:", scanCount);
     // }
   }, [scanCount]);
