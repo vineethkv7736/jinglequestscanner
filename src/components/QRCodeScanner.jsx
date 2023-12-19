@@ -12,7 +12,7 @@ const QRCodeScanner = (email) => {
     if(storedScanCount!==null){
       setScanCount(storedScanCount);
     }
-    // testCount(prev=>prev+1);
+    testCount(prev=>prev+1);
   },[])
 
   const upcount = async (email) => {
