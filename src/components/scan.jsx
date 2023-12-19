@@ -3,19 +3,23 @@ import QRCodeScanner from "./QRCodeScanner";
 import { useNavigate } from "react-router-dom";
 
 const Scan = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [scanCount, setScanCount] = useState(0);
+
+  const updateScanCount = (count) => {
+    setScanCount(count);
+  };
 
   const handleLogout = () => {
     let auth = window.prompt('Type "CONFIRM" to confirm logout');
     if (auth == "CONFIRM") {
       localStorage.removeItem("user");
       localStorage.removeItem("scanCount");
+      localStorage.removeItem("scannedCodes");
       navigate("/");
-    //   localStorage.removeItem("scannedCodes");
-    //   localStorage.removeItem("scanCount");
+      //   localStorage.removeItem("scanCount");
       //  setName("");
       //  setEmail("");
       //  updateScanCount(0);
@@ -64,7 +68,7 @@ const Scan = () => {
         <h1 className="flex justify-center font-serif text-2xl mt-4 mb-4">
           Scan QR
         </h1>
-        <QRCodeScanner email={email}/>
+        <QRCodeScanner email={email} updateScanCount={updateScanCount} />
       </div>
     </div>
   );

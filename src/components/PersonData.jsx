@@ -11,9 +11,9 @@ const PersonData = () => {
   // const [pass, setpass] = useState('');
   // const [isFirstTimeUser, setIsFirstTimeUser] = useState(true);
   // const [scanCount, setScanCount] = useState(0);
-  const updateScanCount = (count) => {
-    setScanCount(count);
-  };
+  // const updateScanCount = (count) => {
+  //   setScanCount(count);
+  // };
   // useEffect(() => {
     
   //   const storedNameJson = localStorage.getItem('user');

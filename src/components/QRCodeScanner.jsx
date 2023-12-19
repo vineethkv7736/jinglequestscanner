@@ -3,17 +3,17 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { db } from "../firebase/config.js";
 import { doc, updateDoc } from "firebase/firestore";
 
-const QRCodeScanner = (email) => {
+const QRCodeScanner = (email, updateScanCount) => {
   const [scanCount, setScanCount] = useState(0);
   const [test, testCount] = useState(0);
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     const storedScanCount = localStorage.getItem("scanCount");
-    if(storedScanCount!==null){
+    if (storedScanCount !== null) {
       setScanCount(storedScanCount);
     }
     //testCount(prev=>prev+1);
-  },[])
+  }, []);
 
   const upcount = async (email) => {
     const up = doc(db, "users", email);
@@ -59,17 +59,15 @@ const QRCodeScanner = (email) => {
     // };
 
     function success(result) {
-
       const l = result.length;
       result = result.toLowerCase();
 
       if (result.charAt(l - 1) === " " && result.substring(0, 3) === "prc") {
-
         const scannedCodes =
           JSON.parse(localStorage.getItem("scannedCodes")) || [];
 
         if (scannedCodes.includes(result)) {
-           qrCodeScanner.clear();
+          qrCodeScanner.clear();
           testCount((prevCount) => prevCount + 1);
           window.alert(`This QR code has already been scanned.`);
         } else {
@@ -77,28 +75,29 @@ const QRCodeScanner = (email) => {
           localStorage.setItem(
             "scannedCodes",
             JSON.stringify([...scannedCodes, result])
-            );
-             qrCodeScanner.clear();
-             if (scanCount === 3) {
-               upcount(email);
-             }
-          setScanCount(prev=>prev+1);
+          );
+          qrCodeScanner.clear();
+          if (scanCount === 3) {
+            upcount(email);
+          }
+          setScanCount((prev) => prev + 1);
         }
-      } else {qrCodeScanner.clear();
-         testCount((prevCount) => prevCount + 1);
+      } else {
+        qrCodeScanner.clear();
+        testCount((prevCount) => prevCount + 1);
         window.alert(`This QR is not authorized in our system`);
       }
       qrCodeScanner.clear();
     }
-    
+
     function error() {}
   }, [test]);
-  
+
   useEffect(() => {
     // if (test > 0) {
-      localStorage.setItem("scanCount", scanCount);
-      console.log("Scancount:", scanCount);
-      // updateScanCount(scanCount);
+    localStorage.setItem("scanCount", scanCount);
+    updateScanCount(scanCount);
+    console.log("Scancount:", scanCount);
     // }
   }, [scanCount]);
 
@@ -108,7 +107,6 @@ const QRCodeScanner = (email) => {
         id="reader"
         className="p-4 ml-10 mr-10 bg-white flex flex-col justify-center shadow-md rounded-md font-sans"
       ></div>
-      id:{scanCount}
     </div>
   );
 };
