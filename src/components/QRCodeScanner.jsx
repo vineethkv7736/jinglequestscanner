@@ -96,7 +96,7 @@ const QRCodeScanner = (em) => {
   useEffect(() => {
     // if (test > 0) {
     localStorage.setItem("scanCount", scanCount);
-    em.updateScanCount(scanCount);
+    em.updateScanCount();
     console.log("Scancount:", scanCount);
     // }
   }, [scanCount]);

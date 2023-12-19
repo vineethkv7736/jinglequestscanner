@@ -8,8 +8,8 @@ const Scan = () => {
   const [email, setEmail] = useState("");
   const [scanCount, setScanCount] = useState(0);
 
-  const updateScanCount = (count) => {
-    setScanCount(count);
+  const updateScanCount = () => {
+    setScanCount((prev)=>prev+1);
   };
 
   const handleLogout = () => {
