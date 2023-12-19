@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { db } from "../firebase/config.js";
 import { doc, updateDoc } from "firebase/firestore";
@@ -7,12 +7,13 @@ const QRCodeScanner = (email) => {
   const [scanCount, setScanCount] = useState(0);
   const [test, testCount] = useState(0);
  
-  // useEffect(()=>{
-  //   const storedScanCount = localStorage.getItem("scanCount");
-  //   if(storedScanCount!==null){
-  //     setScanCount(storedScanCount);
-  //   }
-  // },[])
+  useEffect(()=>{
+    const storedScanCount = localStorage.getItem("scanCount");
+    if(storedScanCount!==null){
+      setScanCount(storedScanCount);
+    }
+    // testCount(prev=>prev+1);
+  },[])
 
   const upcount = async (email) => {
     const up = doc(db, "users", email);
@@ -30,10 +31,10 @@ const QRCodeScanner = (email) => {
   };
 
   useEffect(() => {
-     const storedScanCount = localStorage.getItem("scanCount");
-     if (storedScanCount !== null) {
-       setScanCount(storedScanCount);
-     }
+    //  const storedScanCount = localStorage.getItem("scanCount");
+    //  if (storedScanCount !== null) {
+    //    setScanCount(storedScanCount);
+    //  }
     // const storedScanCount = localStorage.getItem("scanCount");
     // if (test === 9) {
     //   upcount(email);
@@ -68,30 +69,30 @@ const QRCodeScanner = (email) => {
           JSON.parse(localStorage.getItem("scannedCodes")) || [];
 
         if (scannedCodes.includes(result)) {
-          // qrCodeScanner.clear();
+           qrCodeScanner.clear();
           testCount((prevCount) => prevCount + 1);
           window.alert(`This QR code has already been scanned.`);
         } else {
-          // testCount((prevCount) => prevCount + 1);
+          testCount((prevCount) => prevCount + 1);
           localStorage.setItem(
             "scannedCodes",
             JSON.stringify([...scannedCodes, result])
             );
-            // qrCodeScanner.clear();
+             qrCodeScanner.clear();
              if (scanCount === 3) {
                upcount(email);
              }
           setScanCount(prev=>prev+1);
         }
-      } else {
-        // testCount((prevCount) => prevCount + 1);
+      } else {qrCodeScanner.clear();
+         testCount((prevCount) => prevCount + 1);
         window.alert(`This QR is not authorized in our system`);
       }
       qrCodeScanner.clear();
     }
     
     function error() {}
-  }, []);
+  }, [test]);
   
   useEffect(() => {
     // if (test > 0) {
